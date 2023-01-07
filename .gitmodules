@@ -1,0 +1,15 @@
+[submodule "lib/js/JSON-stat"]
+	path = lib/js/JSON-stat
+	url = https://github.com/badosa/JSON-stat.git
+[submodule "lib/js/jquery-dist"]
+	path = lib/js/jquery-dist
+	url = https://github.com/jquery/jquery-dist.git
+[submodule "lib/js/highstock-release"]
+	path = lib/js/highstock-release
+	url = https://github.com/highcharts/highstock-release
+[submodule "lib/font/hagstova.fo.nts"]
+	path = lib/font/hagstova.fo.nts
+	url = https://github.com/hagstovan/hagstova.fo.nts.git
+[submodule "lib/js/highmaps-release"]
+	path = lib/js/highmaps-release
+	url = https://github.com/highcharts/highmaps-release.git

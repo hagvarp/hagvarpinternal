@@ -1,0 +1,59 @@
+.reveal .slides {
+}
+
+
+h1{
+    color: #FFF;
+}
+
+}
+
+#rightrect{
+  position: absolute;
+  margin:auto;
+  background-color: rgba(0,76,128,0.8);
+  height: 17em !important;
+  width: 17em !important;
+  z-index: 500;
+}
+
+@keyframes fadein {
+    from {
+        width:100%;
+        height:100%;
+    }
+    to {
+        width:17%;
+        height:17%;
+    }
+}
+@-moz-keyframes fadein { /* Firefox */
+    from {
+        width:100%;
+        height:100%;
+    }
+    to {
+        width:17em;
+        height:17em;
+    }
+}
+@-webkit-keyframes fadein { /* Safari and Chrome */
+    from {
+        width:100%;
+        height:100%;
+    }
+    to {
+        width:17em;
+        height:17em;
+    }
+}
+@-o-keyframes fadein { /* Opera */
+    from {
+        width:100%;
+        height:100%;
+    }
+    to {
+        width:17em;
+        height:17em;
+    }
+}

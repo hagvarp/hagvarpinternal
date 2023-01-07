@@ -1,0 +1,79 @@
+/**
+ * Hagstovan theme for reveal.js. Based on Black theme for reveal.js.
+ *
+ */
+
+
+// Default mixins and settings -----------------
+@import "../template/mixins";
+@import "../template/settings";
+// ---------------------------------------------
+
+
+// Include theme-specific fonts
+@import url(../../lib/font/open-sans/font.css);
+
+
+// Override theme settings (see ../template/settings.scss)
+$backgroundColor: #004b7f;
+
+$mainColor: #fff;
+$headingColor: #fff;
+
+$mainFontSize: 38px;
+$mainFont: 'Open Sans', Helvetica, sans-serif;
+$headingFont: 'Open Sans', Helvetica, sans-serif;
+$headingTextShadow: none;
+$headingLetterSpacing: normal;
+$headingTextTransform: uppercase;
+$headingFontWeight: 600;
+$linkColor: #fff;
+$linkColorHover: #eee;
+// $linkColorHover: lighten( $linkColor, 15% );
+$selectionBackgroundColor: lighten( $linkColor, 25% );
+
+$heading1Size: 2.5em;
+$heading2Size: 1.6em;
+$heading3Size: 1.3em;
+$heading4Size: 1.0em;
+
+section.has-light-background {
+	&, h1, h2, h3, h4, h5, h6 {
+		color: #222;
+	}
+}
+
+
+// Theme template ------------------------------
+@import "../template/theme";
+// ---------------------------------------------
+
+
+#breddi {
+	position: absolute;
+	width: 100%;
+	text-align: right;
+	font-family: 'Open Sans', Helvetica, sans-serif;
+	color: #fff;
+	font-weight: normal;
+	text-transform: uppercase;
+}
+
+#breddi h2 {
+	font-size: 1.6em;
+	margin-top: 28px;
+	margin-right: 115px;
+}
+
+#breddi h4 {
+	font-size: 0.8em;
+	margin-top: -10px;
+	margin-right: 115px;
+}
+
+#breddi img {
+	position: absolute;
+	top: 20px;
+	right: 30px;
+	height: 80px;
+}

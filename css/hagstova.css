@@ -1,0 +1,18 @@
+.reveal .slides {
+
+}
+
+
+
+
+#rightrect{
+  position: absolute;
+  margin:auto;
+  background-color: rgba(0,76,128,0.8);
+  min-height: 17em !important;
+  width: 17em !important;
+  z-index: 500;
+
+}
+
+
