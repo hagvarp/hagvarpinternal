@@ -1,6 +1,6 @@
 
 
-  document.getElementById('DebugDeadline').innerHTML += 'Hetta er ein roynd 2!';
+
 
   let drupalLanguage = "fo";
 
