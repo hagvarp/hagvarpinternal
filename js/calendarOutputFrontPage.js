@@ -1,4 +1,4 @@
-if (document.getElementById("outputDisseminationFrontPage") != null) {
+
 
   document.getElementById('DebugDeadline').innerHTML += 'Hetta er ein roynd!';
 
@@ -233,4 +233,3 @@ if (document.getElementById("outputDisseminationFrontPage") != null) {
   };
 
   requestCalendarElements.send();
-}
