@@ -1,5 +1,6 @@
 if (document.getElementById("outputDisseminationFrontPage") != null) {
 
+  document.getElementById('DebugDeadline').innerHTML += 'Hetta er ein roynd!';
 
   let drupalLanguage = "fo";
 
