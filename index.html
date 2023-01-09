@@ -2277,7 +2277,7 @@
                         }
                         onnurfiskaslogdata.push([Date.parse(year[i] + "-" + month), (onnurfiskaslog[j] + raekjur[j])*0.001]);
 
-                        console.log(onnurfiskaslogdata);
+           
 
                         toskurhysaupsidata.push([Date.parse(year[i] + "-" + month), (toskur[j] + hysa[j] + upsi[j])*0.001]);
                         alifiskurdata.push([Date.parse(year[i] + "-" + month), (laksur[j] + sil[j])*0.001]);
@@ -3244,7 +3244,7 @@
 
 
 <script>
-    drupalLanguage = "fo";
+    var drupalLanguage = "fo";
     document.getElementById('DebugDeadline').innerHTML += "test" + drupalLanguage;
 
 
