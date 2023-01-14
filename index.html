@@ -3262,6 +3262,13 @@ calendarElementList.setAttribute("class", "calendarElementList");
 calendarElementList.id = "calendarElementList";
 calendarElementListRoot.appendChild(calendarElementList);
 
+var calendarElementList2 = document.createElement("div");
+calendarElementList2.setAttribute("class", "calendarElementList");
+calendarElementList2.id = "calendarElementList2";
+calendarElementListRoot.appendChild(calendarElementList2);
+
+
+
 // Get calendar elements from API
 var requestCalendarElements = new XMLHttpRequest();
 requestCalendarElements.open(
@@ -3279,7 +3286,7 @@ requestCalendarElements.onload = function () {
     requestCalendarElements.status >= 200 &&
     requestCalendarElements.status < 400
   ) {
-    for (i = 0; i < 5; i++) {
+    for (i = 0; i < 10; i++) {
       var listElement = document.createElement("div");
       listElement.setAttribute("class", "listElement"); // Create a <div class="card"> element
       listElement.setAttribute("style", "margin-bottom:15px");
@@ -3362,7 +3369,7 @@ requestCalendarElements.onload = function () {
         listElementName2.innerText = data[i].timePeriod;
 
         listElementName2.innerText = listElementName2.innerText.replace(
-          "kvartal",
+          "ársfjórðingur",
           "quarter"
         );
 
@@ -3458,8 +3465,12 @@ requestCalendarElements.onload = function () {
       var tableQueryResultDiv = document.createElement("div");
       tableQueryResultDiv.id = "tableQueryResult" + i;
 
-      calendarElementList.appendChild(listElement); // Her verður listin gjørdur
 
+      if (i < 5){
+      calendarElementList.appendChild(listElement); // Her verður listin gjørdur (til kolonnu 1)
+      } else {
+            calendarElementList2.appendChild(listElement); // Her verður listin gjørdur (kolonna 2)
+        };
       listElement.appendChild(listElementHeader);
 
       listElementHeader.appendChild(listElementHeading);

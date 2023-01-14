@@ -8,6 +8,13 @@
 /* ----------------------------------------------------------------
 	-- Calendar Page
 -----------------------------------------------------------------*/
+#calendarElementList{
+  float: left;
+}
+
+#calendarElementList2{
+  float: right;
+}
 
 
 #outputDisseminationFrontPage{
@@ -16,6 +23,7 @@
     font-weight: 400 !important;
     text-transform: none !important;
     text-align: left;
+    width: 34rem;
 }
 
 
