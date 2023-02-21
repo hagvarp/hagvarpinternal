@@ -2783,7 +2783,7 @@
                 year = ds.Dimension("year").id;
 
                 var fLen = year.length;
-                q = ds.Dimension("time").id;
+                q = ds.Dimension("period").id;
 
                 //Format Data
                 var pristaldata = [];
@@ -2971,7 +2971,7 @@
                               }
                             },
                             {
-                              "code": "time",
+                              "code": "period",
                               "selection": {
                                 "filter": "item",
                                 "values": [
