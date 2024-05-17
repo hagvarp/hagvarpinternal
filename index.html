@@ -1825,7 +1825,7 @@
 //                                CHART 7
 //---------------------------------------------------------
 
-            var chart7;
+var chart7;
             var chart7Data;
             var chart7CreatedSeries;
             var chart7_last_month;
@@ -1883,70 +1883,40 @@
             function drawChart7() {
 
                 var jsonStatData = chart7Data;
-                var jsonStatUtflutningurData= chart7bData;
 
-
-                //Extrat Data From JSON Stat
-
+                //Extract Data From JSON Stat
                 ds = JSONstat(jsonStatData).Dataset(0);
 
+                m = ds.Dimension("month").id;
 
-                dsutflutningur = JSONstat(jsonStatUtflutningurData).Dataset(0);
-
-                t = dsutflutningur.Dimension("year").length - 1;
-                year = dsutflutningur.Dimension("year").id;
-
-                yearinnflutningur = ds.Dimension("year").id;
-                yearinnflutningurlength = yearinnflutningur.length
-                var fLen = year.length;
-
-                yearinnflutningurutflutningurdifference = yearinnflutningurlength - fLen;
-
-
-
-                m = dsutflutningur.Dimension("month").id;
+                var fLen = m.length;
 
                 //Format Data
-
-
-
-
                 var innflutningurdata = [];
                 var utflutningurdata = [];
                 var nettoflytingdata = [];
 
-                var yaxisinnflutningur = [];
-                var yaxisutflutningur = [];
+                var month;
 
                 for (var i = 0; i < fLen; i++) {
 
-
-                    innflutningur = ds.Data({ "BEC-groups": "TOT", "year": ds.Dimension("year").id[i + yearinnflutningurutflutningurdifference] }, false).filter(function(n) { return n; });
-
-
-                    utflutningur = dsutflutningur.Data({ "unit": "DKK", "commodity groups": "TOT", "year": dsutflutningur.Dimension("year").id[i] }, false).filter(function(n) { return n; });
+                    innflutningur = ds.Data({ "flow": "P71", "month": ds.Dimension("month").id[i] }, false);
+                    utflutningur = ds.Data({ "flow": "P61", "month": ds.Dimension("month").id[i] }, false);
 
 
-                    for (var j = 0; j < utflutningur.length; j++) {
 
-                        yaxisinnflutningur.push[innflutningur[j]];
-                        yaxisutflutningur.push[-utflutningur[j]];
+                    month = m[i].replace("M", "-");
 
-                        var month = m[j];
+                    
 
-                        month = m[j].replace("M", "");
+                    innflutningurdata.push([Date.parse(month), -innflutningur/1000000]);
+                    utflutningurdata.push([Date.parse(month), utflutningur/1000000]);
+                    nettoflytingdata.push([Date.parse(month), (utflutningur - innflutningur)/1000000]);   
 
 
-                        if(month.length == 1) {
-                            month = "0" + month;
-                        }
-
-                        innflutningurdata.push([Date.parse(year[i] + "-" + month), -innflutningur[j]/1000]);
-                        utflutningurdata.push([Date.parse(year[i] + "-" + month), utflutningur[j]/1000]);
-                        nettoflytingdata.push([Date.parse(year[i] + "-" + month), (utflutningur[j] - innflutningur[j])/1000]);
-
-                    }
                 }
+
+
 
                 var chart7_last_month = innflutningurdata[innflutningurdata.length - 1];
                 chart7_last_month = chart7_last_month[0];
@@ -2101,26 +2071,38 @@
             }
 
             function loadDataAndBuildChart7() {
-                POST("https://statbank.hagstova.fo/api/v1/fo/H2/UH/UH01/uh_innbec.px", {
+                POST("https://statbank.hagstova.fo:443/api/v1/fo/H2/UH/UH01/uh_bec_t.px", {
                     "query": [
                         {
-                              "code": "BEC-groups",
+                            "code": "flow",
+                            "selection": {
+                                "filter": "item",
+                                "values": [
+                                "P61",
+                                "P71"
+                                ]
+                            }
+                        },                    
+                        {
+                              "code": "measure",
                               "selection": {
                                 "filter": "item",
                                 "values": [
-                                  "TOT"
+                                  "Value"
                                 ]
                               }
-                            },
+                        },
+
                         {
-                          "code": "month",
-                          "selection": {
-                            "filter": "all",
-                            "values": [
-                              "*"
-                            ]
-                          }
+                            "code": "month",
+                            "selection": {
+                                "filter": "all",
+                                "values": [
+                                    "*"
+                                ]
+                            }
                         }
+
                     ],
                     "response": {
                         "format": "json-stat"
@@ -2129,54 +2111,10 @@
 
                 },function(data) {
                     chart7Data = data;
-                    loadDataAndBuildChart7b();
-                } );
-            }
-
-
-            function loadDataAndBuildChart7b() {
-                POST("https://statbank.hagstova.fo/api/v1/fo/H2/UH/UH01/uh_ututgr.px", {
-                    "query": [
-                        {
-                          "code": "unit",
-                          "selection": {
-                            "filter": "item",
-                            "values": [
-                              "DKK"
-                            ]
-                          }
-                        },
-                        {
-                              "code": "commodity groups",
-                              "selection": {
-                                "filter": "item",
-                                "values": [
-                                  "TOT"
-                                ]
-                              }
-                            },
-                        {
-                          "code": "month",
-                          "selection": {
-                            "filter": "all",
-                            "values": [
-                              "*"
-                            ]
-                          }
-                        }
-                    ],
-                    "response": {
-                        "format": "json-stat"
-
-                    }
-
-                },function(data) {
-                    chart7bData = data;
                     drawChart7();
                     startAnimatingChart7();
                 } );
             }
-
 
 
 
