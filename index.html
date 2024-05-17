@@ -2959,14 +2959,14 @@
             }
 
             function loadDataAndBuildChart10() {
-                POST("https://statbank.hagstova.fo/api/v1/fo/H2/IP/IP02/pris_hovb.px", {
+                POST("https://statbank.hagstova.fo:443/api/v1/fo/H2/IP/IP02/pris_alt.px", {
                     "query": [
                             {
-                              "code": "commodity groups",
+                              "code": "measure",
                               "selection": {
                                 "filter": "item",
                                 "values": [
-                                  "CPI"
+                                  "INDEX"
                                 ]
                               }
                             },
