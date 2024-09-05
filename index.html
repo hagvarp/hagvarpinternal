@@ -1107,7 +1107,7 @@
             }
 
             function loadDataAndBuildChart4() {
-                POST("https://statbank.hagstova.fo/api/v1/fo/H2/AM/AM02/al_pctkyn.px", {
+                POST("https://statbank.hagstova.fo/api/v1/fo/H2/AM/AMS/ARL/al_pctkyn.px", {
                     "query": [
                         {
                             "code": "measure",
@@ -1266,7 +1266,7 @@
             }
 
             function loadDataAndBuildChart4b() {
-                POST("https://statbank.hagstova.fo/api/v1/fo/H2/AM/AM02/al_aldkysy_t.px", {
+                POST("https://statbank.hagstova.fo/api/v1/fo/H2/AM/AMS/ARL/al_aldkysy_t.px", {
 					   "query": [
 					    {
 					      "code": "measure",
@@ -1326,7 +1326,8 @@
 //---------------------------------------------------------
 //                                CHART 5
 //---------------------------------------------------------
-            var chart5;
+
+var chart5;
             var chart5Data;
             var chart5CreatedSeries;
             var chart5_last_month;
@@ -1362,42 +1363,42 @@
                 var jsonStatData = chart5Data;
                 //Extrat Data From JSON Stat
                 ds = JSONstat(jsonStatData).Dataset(0);
-                t = ds.Dimension("year").length - 1;
-                year = ds.Dimension("year").id;
-                var fLen = year.length;
                 m = ds.Dimension("month").id;
+                var fLen = m.length;
 
 
-            //Format Data
 
-                var lontakarardata = [];
+
+                //Format Data
+                var starvsfolkdata = [];
                 var trendurdata = [];
+                var month;
 
-                var yaxislontakarar = [];
-                var yaxisfraflyting = [];
 
                 for (var i = 0; i < fLen; i++) {
-                    lontakarar = ds.Data({ "value mode": "LT", "year": ds.Dimension("year").id[i] }, false).filter(function(n) { return n; });
-                    trendur = ds.Data({ "value mode": "TR", "year": ds.Dimension("year").id[i] }, false).filter(function(n) { return n; });
 
-                    for (var j = 0; j < lontakarar.length; j++) {
-                         var month = m[j].substring(1);
+                    var starvsfolk = ds.Data({"value mode": "OBSERVED", "month": ds.Dimension("month").id[i] }, false);
+                    var trendur = ds.Data({"value mode": "SESONAL_ADDATIVE_M_TREND", "month": ds.Dimension("month").id[i] }, false);
 
-                        yaxislontakarar.push[lontakarar[j]];
-                        lontakarardata.push([Date.parse(year[i] + "-" + month), lontakarar[j]]);
-                        trendurdata.push([Date.parse(year[i] + "-" + month), trendur[j]]);
+                    month = m[i].replace("M", "-");
+                    starvsfolkdata.push([Date.parse(month), starvsfolk]);
+                    trendurdata.push([Date.parse(month), trendur]);
 
-                    }
                 }
 
 
-                var chart5_last_month = lontakarardata[lontakarardata.length - 1];
+
+
+        
+
+
+                var chart5_last_month = starvsfolkdata[starvsfolkdata.length - 1];
                 chart5_last_month = chart5_last_month[0];
 
                 //Build Series
                 var createdSeries = [{
-                    name: "Løntakarar",
-                    data: lontakarardata,
+                    name: "Starvsfólk",
+                    data: starvsfolkdata,
                     color: "#7fb800",
                     borderWidth: 0,
                     tooltip: {
@@ -1547,17 +1548,28 @@
             }
 
             function loadDataAndBuildChart5() {
-                POST("https://statbank.hagstova.fo/api/v1/fo/H2/AM/AM03/lont_ajtr.px", {
+                POST("https://statbank.hagstova.fo/api/v1/fo/H2/AM/AMS/STF/stf_hov_md.px", {
                     "query": [
-                        {
-                            "code": "value mode",
-                            "selection": {
-                                "filter": "item",
-                                "values": [
-                                    "LT", "TR"
-                                ]
-                            }
+                    {
+                        "code": "measure",
+                        "selection": {
+                            "filter": "item",
+                            "values": [
+                            "MAINJOB"
+                            ]
                         }
+                        },
+                        {
+                        "code": "value mode",
+                        "selection": {
+                            "filter": "item",
+                            "values": [
+                            "OBSERVED",
+                            "SESONAL_ADDATIVE_M_TREND"
+                            ]
+                        }
+                    }
+
                     ],
                     "response": {
                         "format": "json-stat"
@@ -1576,10 +1588,11 @@
 
 
 
+
 //---------------------------------------------------------
 //                                CHART 6
 //---------------------------------------------------------
-            var chart6;
+var chart6;
             var chart6Data;
             var chart6CreatedSeries;
             var chart6_last_month;
@@ -1615,41 +1628,42 @@
                 var jsonStatData = chart6Data;
                 //Extrat Data From JSON Stat
                 ds = JSONstat(jsonStatData).Dataset(0);
-                t = ds.Dimension("year").length - 1;
-                year = ds.Dimension("year").id;
-                var fLen = year.length;
                 m = ds.Dimension("month").id;
+                var fLen = m.length;
+                
 
 
-            //Format Data
 
-                var lontakarardata = [];
+                //Format Data
+                var lonirdata = [];
                 var trendurdata = [];
+                var month;
 
-                var yaxislontakarar = [];
-                var yaxisfraflyting = [];
 
                 for (var i = 0; i < fLen; i++) {
-                    lontakarar = ds.Data({ "value mode": "WA", "year": ds.Dimension("year").id[i] }, false).filter(function(n) { return n; });
-                    trendur = ds.Data({ "value mode": "TR", "year": ds.Dimension("year").id[i] }, false).filter(function(n) { return n; });
 
-                    for (var j = 0; j < lontakarar.length; j++) {
-                         var month = m[j].substring(1);
+                    var lonir = ds.Data({"value mode": "OBSERVED", "month": ds.Dimension("month").id[i] }, false);
+                    var trendur = ds.Data({"value mode": "SESONAL_ADDATIVE_M_TREND", "month": ds.Dimension("month").id[i] }, false);
 
-                        yaxislontakarar.push[lontakarar[j]];
-                        lontakarardata.push([Date.parse(year[i] + "-" + month), (lontakarar[j]/1000)]);
-                        trendurdata.push([Date.parse(year[i] + "-" + month), (trendur[j]/1000)]);
+                    month = m[i].replace("M", "-");
+                    lonirdata.push([Date.parse(month), lonir/1000000]);
+                    trendurdata.push([Date.parse(month), trendur/1000000]);
 
-                    }
                 }
 
-                var chart6_last_month = lontakarardata[lontakarardata.length - 1];
+
+
+
+
+
+
+                var chart6_last_month = lonirdata[lonirdata.length - 1];
                 chart6_last_month = chart6_last_month[0];
 
                 //Build Series
                 var createdSeries = [{
-                    name: "Lønargjaldingar",
-                    data: lontakarardata,
+                    name: "Lønir",
+                    data: lonirdata,
                     color: "#7fb800",
                     borderWidth: 0,
                     tooltip: {
@@ -1796,17 +1810,18 @@
             }
 
             function loadDataAndBuildChart6() {
-                POST("https://statbank.hagstova.fo/api/v1/fo/H2/AM/AM04/lon_ajtrmd.px", {
+                POST("https://statbank.hagstova.fo:443/api/v1/fo/H2/AM/LON/LON01/lon_ul_hov_md.px", {
                     "query": [
-                        {
-                            "code": "value mode",
-                            "selection": {
-                                "filter": "item",
-                                "values": [
-                                    "WA", "TR"
-                                ]
-                            }
+                    {
+                        "code": "value mode",
+                        "selection": {
+                            "filter": "item",
+                            "values": [
+                            "OBSERVED",
+                            "SESONAL_ADDATIVE_M_TREND"
+                            ]
                         }
+                    }
                     ],
                     "response": {
                         "format": "json-stat"
@@ -1818,7 +1833,6 @@
                     startAnimatingChart6();
                 } );
             }
-
 
 
 //---------------------------------------------------------
@@ -3134,13 +3148,13 @@ var chart8;
 
 
         <section data-background="assets/lontakarar_2.jpg" data-background-transition="fade" data-autoslide="4000">
-            <h1><img src="assets/hagstova_logo_white.svg" alt="Hagstova Føroya" class="logo" />Løntakarar</h1>
+            <h1><img src="assets/hagstova_logo_white.svg" alt="Hagstova Føroya" class="logo" />Starvsfólk</h1>
         </section>
         <section data-state="lontakarar" data-background="assets/lontakarar_2.jpg">
             <div class="infobox blue">
                 <div class="background"></div>
-                <h2>Løntakarar<h2/>
-                <p>16-74 ár</p>
+                <h2>Starvsfólk<h2/>
+                <p>13 ár og eldri</p>
                     <div>
                         <div id="chart5"></div>
                     </div>
@@ -3148,12 +3162,12 @@ var chart8;
         </section>
 
         <section data-background="assets/breydvirki.jpg" data-background-transition="fade" data-autoslide="4000">
-            <h1><img src="assets/hagstova_logo_white.svg" alt="Hagstova Føroya" class="logo" />Lønargjaldingar</h1>
+            <h1><img src="assets/hagstova_logo_white.svg" alt="Hagstova Føroya" class="logo" />Lønir</h1>
         </section>
         <section data-state="lonargjaldingar" data-background="assets/breydvirki.jpg">
             <div class="infobox blue">
                 <div class="background"></div>
-                <h2>Lønargjaldingar<h2/>
+                <h2>Lønir<h2/>
                 <p>í mió. kr.</p>
                     <div>
                         <div id="chart6"></div>
