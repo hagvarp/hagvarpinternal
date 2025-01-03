@@ -946,23 +946,25 @@
 
                 //Extrat Data From JSON Stat
                 ds = JSONstat(jsonStatData).Dataset(0);
-                t = ds.Dimension("year").length - 1;
-                year = ds.Dimension("year").id;
-
-                var fLen = year.length;
+                              
                 m = ds.Dimension("month").id;
+                var fLen = m.length;
+
 
                 //Format Data
                 var unemploymentdata = [];
 
-                for (var i = 0; i < fLen; i++) {
-                    var unemployment = ds.Data({ "year": ds.Dimension("year").id[i] }, false).filter(function(n) { return n; });
 
-                    for (var j = 0; j < unemployment.length; j++) {
-                        var month = m[j].substring(1);
-                        unemploymentdata.push([Date.parse(year[i] + "-" + month), unemployment[j]]);
-                    }
+                for (var i = 0; i < fLen; i++) {
+                    var unemployment = ds.Data({ "measure": "UNE_FE_PCT_LF", "month": ds.Dimension("month").id[i] }, false);
+
+                    month = m[i].replace("M", "-");
+                    unemploymentdata.push([Date.parse(month), unemployment]);
+
                 }
+
+                console.log(unemploymentdata);
+ 
 
                 var chart4_last_month = unemploymentdata[unemploymentdata.length - 1];
                 chart4_last_month = chart4_last_month[0];
@@ -1107,7 +1109,7 @@
             }
 
             function loadDataAndBuildChart4() {
-                POST("https://statbank.hagstova.fo/api/v1/fo/H2/AM/AMS/ARL/al_pctkyn.px", {
+                POST("https://statbank.hagstova.fo:443/api/v1/fo/H2/AM/AMS/ARL/arl_pctkyn_t.px", {
                     "query": [
                         {
                             "code": "measure",
@@ -1115,26 +1117,6 @@
                                 "filter": "item",
                                 "values": [
                                     "UNE_FE_PCT_LF"
-                                ]
-                            }
-                        },
-                        {
-                            "code": "month",
-                            "selection": {
-                                "filter": "item",
-                                "values": [
-                                    "M01",
-                                    "M02",
-                                    "M03",
-                                    "M04",
-                                    "M05",
-                                    "M06",
-                                    "M07",
-                                    "M08",
-                                    "M09",
-                                    "M10",
-                                    "M11",
-                                    "M12"
                                 ]
                             }
                         }
@@ -1266,7 +1248,7 @@
             }
 
             function loadDataAndBuildChart4b() {
-                POST("https://statbank.hagstova.fo/api/v1/fo/H2/AM/AMS/ARL/al_aldkysy_t.px", {
+                POST("https://statbank.hagstova.fo/api/v1/fo/H2/AM/AMS/ARL/arl_aldkysy_t.px", {
 					   "query": [
 					    {
 					      "code": "measure",
@@ -1646,6 +1628,7 @@ var chart6;
                     var trendur = ds.Data({"value mode": "SESONAL_ADDATIVE_M_TREND", "month": ds.Dimension("month").id[i] }, false);
 
                     month = m[i].replace("M", "-");
+                    console.log(month);
                     lonirdata.push([Date.parse(month), lonir/1000000]);
                     trendurdata.push([Date.parse(month), trendur/1000000]);
 
@@ -2221,7 +2204,6 @@ var chart8;
                     var sil = ds.Data({"species (MCS)": "01000", "month": ds.Dimension("month").id[i] }, false);
 
 
-                    console.log(nonfiskaslog);
 
                         month = m[i].replace("M", "-");
                         onnurfiskaslogdata.push([Date.parse(month), (total-nonfiskaslog-toskur-hysa-upsi-makrelur-sild-svartkjaftur-laksur-sil)/1000000]);
