@@ -2578,23 +2578,22 @@ var chart8;
 
                 //Extrat Data From JSON Stat
                 ds = JSONstat(jsonStatData).Dataset(0);
-                t = ds.Dimension("year").length - 1;
-                year = ds.Dimension("year").id;
-
-                var fLen = year.length;
-                m = ds.Dimension("month").id;
-
-                //Format Data
+                var months = ds.Dimension("month").id;
+                var values = ds.value;
                 var gistingardata = [];
 
-                for (var i = 0; i < fLen; i++) {
-                    var gistingar = ds.Data({ "year": ds.Dimension("year").id[i] }, false).filter(function(n) { return n; });
-
-                    for (var j = 0; j < gistingar.length; j++) {
-                        var month = m[j].substring(1);
-                        gistingardata.push([Date.parse(year[i] + "-" + month), gistingar[j]]);
-                    }
+                for (var i = 0; i < months.length; i++) {
+                    var m = months[i]; // e.g. "2013M01"
+                
+                    var year = m.substring(0, 4);
+                    var month = m.substring(5, 7);
+                
+                    gistingardata.push([
+                        Date.UTC(parseInt(year, 10), parseInt(month, 10) - 1, 1),
+                        values[i]
+                    ]);
                 }
+
 
                 var chart9_last_month = gistingardata[gistingardata.length - 1];
                 chart9_last_month = chart9_last_month[0];
@@ -2741,37 +2740,27 @@ var chart8;
             }
 
             function loadDataAndBuildChart9() {
-                POST("https://statbank.hagstova.fo:443/api/v1/fo/H2/VV/VV07/gist_hus.px", {
-                    "query": [
-                        {
-                            "code": "unit",
-                            "selection": {
-                                "filter": "item",
-                                "values": [
-                                    "STAYS"
-                                ]
-                            }
-                        },
-                        {
-                            "code": "month",
-                            "selection": {
-                                "filter": "all",
-                                "values": [
-                                    "*"
-                                ]
-                            }
-                        }
-                    ],
-                    "response": {
-                        "format": "json-stat"
+                POST("https://statbank.hagstova.fo:443/api/v1/en/H2/VV/VV07/gist_gist_md.px", {
+                  "query": [
+                    {
+                      "code": "measure",
+                      "selection": {
+                        "filter": "item",
+                        "values": [
+                          "OVERN_USED"
+                        ]
+                      }
                     }
+                  ],
+                  "response": {
+                    "format": "json-stat"
+                  }
                 }, function(data) {
                     chart9Data = data;
                     drawChart9();
                     startAnimatingChart9();
                 });
             }
-
 
 
 
