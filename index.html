@@ -139,24 +139,22 @@
                 var jsonStatData = chart1Data;
                 //Extrat Data From JSON Stat
                 ds = JSONstat(jsonStatData).Dataset(0);
-                t = ds.Dimension("year").length - 1;
-                year = ds.Dimension("year").id;
-                var fLen = year.length;
-                m = ds.Dimension("month").id;
+                var months = ds.Dimension("month").id;
 
-                //Format Data
+                var folkatal = ds.Data({
+                    "changes": "Popu_primo",
+                    "village/city": "999999"
+                }, false);
 
                 var folkataldata = [];
 
-                for (var i = 0; i < fLen; i++) {
-                    folkatal = ds.Data({ "changes": "Popu_primo", "village/city": "999999", "year": ds.Dimension("year").id[i] }, false).filter(function(n) { return n; });
-
-                    for (var j = 0; j < folkatal.length; j++) {
-                        mon = m[j].replace("M", "-");
-                        folkataldata.push([Date.parse(year[i] + mon), folkatal[j]]);
-                        nextMonth = year[i] + mon
-
-                    }
+                for (var i = 0; i < months.length; i++) {
+                    var month = months[i].replace("M", "-");
+                
+                    folkataldata.push([
+                        Date.parse(month + "-01"),
+                        folkatal[i]
+                    ]);
                 }
 
 
@@ -321,7 +319,7 @@
             }
 
             var loadDataAndBuildChart1 = function() {
-                POST("https://statbank.hagstova.fo/api/v1/fo/H2/IB/IB01/fo_vital_md.px", {
+                POST("https://statbank.hagstova.fo/api/v1/fo/H2/IB/IB01/fo_vit_md_t.px", {
                     "query": [
                         {
                             "code": "village/city",
@@ -417,47 +415,64 @@
 
             }
 
-            //Chart 2 specific functions
+                        //Chart 2 specific functions
             function drawChart2() {
-
+            
                 var jsonStatData = chart2Data;
-                //Extrat Data From JSON Stat
-                ds = JSONstat(jsonStatData).Dataset(0);
-                t = ds.Dimension("year").length - 1;
-                year = ds.Dimension("year").id;
-                var fLen = year.length;
-                m = ds.Dimension("month").id;
-
-                //Format Data
+                // Extract data from JSON-stat
+                var ds = JSONstat(jsonStatData).Dataset(0);
+            
+                // Month now contains year + month, e.g. 2016M01
+                var months = ds.Dimension("month").id;
+                var fLen = months.length;
+            
+                // Format Data
                 var tilflytingdata = [];
                 var fraflytingdata = [];
                 var nettoflytingdata = [];
-
+            
                 var yaxistilflyting = [];
                 var yaxisfraflyting = [];
-
-                for (var i = 0; i < fLen; i++) { 
-                    tilflyting = ds.Data({ "changes": "Immigr_int", "village/city": "999999", "year": ds.Dimension("year").id[i] }, false).filter(function(n) { return n; });
-                    fraflyting = ds.Data({ "changes": "Emmigr_int", "village/city": "999999", "year": ds.Dimension("year").id[i] }, false).filter(function(n) { return n; });
-
-                    for (var j = 0; j < tilflyting.length; j++) {
-                        mon = m[j].replace("M", "-");
-
-                        yaxistilflyting.push[tilflyting[j]];
-                        yaxisfraflyting.push[-fraflyting[j]];
-
-                        tilflytingdata.push([Date.parse(year[i] + mon), tilflyting[j]]);
-                        fraflytingdata.push([Date.parse(year[i] + mon), -fraflyting[j]]);
-                        nettoflytingdata.push([Date.parse(year[i] + mon), tilflyting[j] - fraflyting[j]]);
-
-                    }
+            
+                var tilflyting = ds.Data({
+                    "changes": "Immigr_int",
+                    "village/city": "999999"
+                }, false);
+            
+                var fraflyting = ds.Data({
+                    "changes": "Emmigr_int",
+                    "village/city": "999999"
+                }, false);
+            
+                for (var i = 0; i < fLen; i++) {
+                
+                    // 2016M01 -> 2016-01-01
+                    var month = months[i].replace("M", "-") + "-01";
+                    var date = Date.parse(month);
+                
+                    yaxistilflyting.push(tilflyting[i]);
+                    yaxisfraflyting.push(-fraflyting[i]);
+                
+                    tilflytingdata.push([
+                        date,
+                        tilflyting[i]
+                    ]);
+                
+                    fraflytingdata.push([
+                        date,
+                        -fraflyting[i]
+                    ]);
+                
+                    nettoflytingdata.push([
+                        date,
+                        tilflyting[i] - fraflyting[i]
+                    ]);
                 }
-
-
-                var chart2_last_month = tilflytingdata[tilflytingdata.length - 1];
-                chart2_last_month = chart2_last_month[0];
-
-                //Build Series
+            
+                var chart2_last_month =
+                    tilflytingdata[tilflytingdata.length - 1][0];
+            
+                            //Build Series
                 var createdSeries = [{
                     name: "Tilflyting",
                     data: tilflytingdata,
@@ -601,7 +616,7 @@
             }
 
             function loadDataAndBuildChart2() {
-                POST("https://statbank.hagstova.fo/api/v1/fo/H2/IB/IB01/fo_vital_md.px", {
+                POST("https://statbank.hagstova.fo/api/v1/fo/H2/IB/IB01/fo_vit_md_t.px", {
                     "query": [
                         {
                             "code": "village/city",
@@ -696,195 +711,227 @@
             }
 
             //Chart 3 specific functions
-            function drawChart3() {
+function drawChart3() {
 
-                var jsonStatData = chart3Data;
-                //Extrat Data From JSON Stat
-                ds = JSONstat(jsonStatData).Dataset(0);
-                t = ds.Dimension("year").length - 1;
-                year = ds.Dimension("year").id;
-                var fLen = year.length;
-                m = ds.Dimension("month").id;
+    var jsonStatData = chart3Data;
 
-                //Format Data
+    // Extract data from JSON-stat
+    var ds = JSONstat(jsonStatData).Dataset(0);
 
+    // Month now contains year + month, e.g. 2016M01
+    var months = ds.Dimension("month").id;
 
+    // Format Data
+    var tilflytingdata = [];
+    var fraflytingdata = [];
+    var nettoflytingdata = [];
 
-                var tilflytingdata = [];
-                var fraflytingdata = [];
-                var nettoflytingdata = [];
+    var tilflyting = ds.Data({
+        "changes": "Birth",
+        "village/city": "999999"
+    }, false);
 
-                var yaxistilflyting = [];
-                var yaxisfraflyting = [];
+    var fraflyting = ds.Data({
+        "changes": "Death",
+        "village/city": "999999"
+    }, false);
 
-                for (var i = 0; i < fLen; i++) {
-                    tilflyting = ds.Data({ "changes": "Birth", "village/city": "999999", "year": ds.Dimension("year").id[i] }, false).filter(function(n) { return n; });
-                    fraflyting = ds.Data({ "changes": "Death", "village/city": "999999", "year": ds.Dimension("year").id[i] }, false).filter(function(n) { return n; });
+    for (var i = 0; i < months.length; i++) {
 
-                    for (var j = 0; j < tilflyting.length; j++) {
-                        mon = m[j].replace("M", "-");
+        // 2016M01 -> 2016-01-01
+        var month = months[i].replace("M", "-") + "-01";
+        var date = Date.parse(month);
 
-                        yaxistilflyting.push[tilflyting[j]];
-                        yaxisfraflyting.push[-fraflyting[j]];
+        tilflytingdata.push([
+            date,
+            tilflyting[i]
+        ]);
 
-                        tilflytingdata.push([Date.parse(year[i] + mon), tilflyting[j]]);
-                        fraflytingdata.push([Date.parse(year[i] + mon), -fraflyting[j]]);
-                        nettoflytingdata.push([Date.parse(year[i] + mon), tilflyting[j] - fraflyting[j]]);
+        fraflytingdata.push([
+            date,
+            -fraflyting[i]
+        ]);
 
-                    }
+        nettoflytingdata.push([
+            date,
+            tilflyting[i] - fraflyting[i]
+        ]);
+    }
+
+    // Last available month
+    var chart3_last_month =
+        tilflytingdata[tilflytingdata.length - 1][0];
+
+    // Build Series
+    var createdSeries = [{
+        name: "Fødd",
+        data: tilflytingdata,
+        color: "#7fb800",
+        borderWidth: 0,
+        tooltip: {
+            valueDecimals: 0
+        }
+    }, {
+        name: "Deyð",
+        data: fraflytingdata,
+        color: "#9b1212",
+        borderWidth: 0,
+        tooltip: {
+            valueDecimals: 0
+        }
+    }, {
+        name: "Burðaravlop",
+        type: "spline",
+        data: nettoflytingdata,
+        color: "#fff",
+        borderWidth: 0,
+        tooltip: {
+            valueDecimals: 0
+        },
+        marker: {
+            enabled: false
+        }
+    }];
+
+    chart3CreatedSeries = createdSeries;
+
+    // Build Title
+    var title = ds.label;
+
+    // Build subtitle
+    var subtitle = ds.source;
+
+    // Build Tooltip
+    var tooltipFunction = function () {
+        var s = "<b>" + Highcharts.dateFormat("%Y-%b", this.x) + "</b>";
+
+        $.each(this.points, function (i, point) {
+            s += "<br/>" +
+                point.series.name +
+                ": " +
+                Highcharts.numberFormat(point.y, 0.0, ",", ".");
+        });
+
+        return s;
+    };
+
+    // Build Chart
+    $("#chart3").highcharts({
+        credits: {
+            enabled: false
+        },
+
+        chart: {
+            type: "column",
+            backgroundColor: "rgba(255, 255, 255, 0)",
+            borderWidth: 0,
+            renderTo: "container",
+
+            events: {
+                load: function () {
+                    chart3 = this;
                 }
-
-                var chart3_last_month = tilflytingdata[tilflytingdata.length - 1];
-                chart3_last_month = chart3_last_month[0];
-
-                //Build Series
-                var createdSeries = [{
-                    name: "Fødd",
-                    data: tilflytingdata,
-                    color: "#7fb800",
-                    borderWidth: 0,
-                    tooltip: {
-                        valueDecimals: 0
-                    }
-                }, {
-                    name: "Deyð",
-                    data: fraflytingdata,
-                    color: "#9b1212",
-                    borderWidth: 0,
-                    tooltip: {
-                        valueDecimals: 0
-                    }
-                }, {
-                    name: "Burðaravlop",
-                    type: "spline",
-                    data: nettoflytingdata,
-                    color: "#fff",
-                    borderWidth: 0,
-                    tooltip: {
-                        valueDecimals: 0
-                    },
-                    marker: {
-                        enabled: false
-                    }
-                }];
-                chart3CreatedSeries = createdSeries;
-
-
-                //Build Title
-                var title = ds.label;
-
-                //Build subtitle
-                var subtitle = ds.source;
-
-                //Build Tooltip
-                var tooltipFunction = function () {
-                    var s = "<b>" + Highcharts.dateFormat("%Y-%b", this.x) + "</b>";
-                    $.each(this.points,
-                        function (i, point) {
-                            s += "<br/>" + point.series.name + ": " + Highcharts.numberFormat(point.y, 0.0, ",", ".");
-                        });
-
-                    return s;
-                }
-
-                //Build Chart
-                $("#chart3").highcharts({
-                    credits: {
-                        enabled: false
-                    },
-                    chart: {
-                        type: "column",
-                        backgroundColor: "rgba(255, 255, 255, 0)",
-                        borderWidth: 0,
-                        renderTo: "container",
-                        events: {
-                            load: function () {
-                                chart3 = this;
-                            }
-
-                        }
-                    },
-                    rangeSelector: {
-                        enabled: false
-                    },
-
-                    exporting: {
-                        enabled: false
-                    },
-
-                    navigator: {
-                        enabled: false
-                    },
-                    title: {
-                        text: ""
-                    },
-                    legend: {
-                        layout: "horizontal",
-                        align: "center",
-                        verticalAlign: "top",
-
-                        itemStyle: {
-                            color: "#fff",
-                            fontWeight: "normal"
-                        }
-                    },
-                    xAxis: {
-                        title: {
-                            enabled: false
-                        },
-                        type: "datetime",
-                        min: chart3_last_month - 65743595833,
-                        max: chart3_last_month,
-                        labels: {
-                            style: {
-                                color: "#fff",
-                                fontSize: "11px"
-                            }
-                        }
-                    },
-                    yAxis: {
-                        title: {
-                            text: "",
-                            style: {
-                                color: "#fff",
-                                fontWeight: "normal",
-                                fontSize: "12px"
-                            }
-                        },
-                        lineColor: "#fff",
-                        tickColor: "#fff",
-                        labels: {
-                            formatter: function () {
-                                return Highcharts.numberFormat(Math.abs(this.value), 0);
-                            },
-                            style: {
-                                color: "#fff",
-                                font: "11px"
-                            }
-                        },
-                    },
-                    tooltip: {
-						enabled: false
-                    },
-                    plotOptions: {
-                        series: {
-                            stacking: "normal",
-                            showInNavigator: true,
-                            dataGrouping:{
-                                enabled: true,
-                                approximation: "sum",
-                                units:[ ["year", null]]
-                            }
-                        }
-
-
-                    },
-                    series: []
-                });
             }
+        },
+
+        rangeSelector: {
+            enabled: false
+        },
+
+        exporting: {
+            enabled: false
+        },
+
+        navigator: {
+            enabled: false
+        },
+
+        title: {
+            text: ""
+        },
+
+        legend: {
+            layout: "horizontal",
+            align: "center",
+            verticalAlign: "top",
+
+            itemStyle: {
+                color: "#fff",
+                fontWeight: "normal"
+            }
+        },
+
+        xAxis: {
+            title: {
+                enabled: false
+            },
+
+            type: "datetime",
+
+            min: chart3_last_month - 65743595833,
+            max: chart3_last_month,
+
+            labels: {
+                style: {
+                    color: "#fff",
+                    fontSize: "11px"
+                }
+            }
+        },
+
+        yAxis: {
+            title: {
+                text: "",
+                style: {
+                    color: "#fff",
+                    fontWeight: "normal",
+                    fontSize: "12px"
+                }
+            },
+
+            lineColor: "#fff",
+            tickColor: "#fff",
+
+            labels: {
+                formatter: function () {
+                    return Highcharts.numberFormat(
+                        Math.abs(this.value),
+                        0
+                    );
+                },
+
+                style: {
+                    color: "#fff",
+                    font: "11px"
+                }
+            }
+        },
+
+        tooltip: {
+            enabled: false
+        },
+
+        plotOptions: {
+            series: {
+                stacking: "normal",
+                showInNavigator: true,
+
+                dataGrouping: {
+                    enabled: true,
+                    approximation: "sum",
+                    units: [
+                        ["year", null]
+                    ]
+                }
+            }
+        },
+
+        series: []
+    });
+}
 
             function loadDataAndBuildChart3() {
-                POST("https://statbank.hagstova.fo/api/v1/fo/H2/IB/IB01/fo_vital_md.px", {
+                POST("https://statbank.hagstova.fo/api/v1/fo/H2/IB/IB01/fo_vit_md_t.px", {
                     "query": [
                         {
                             "code": "village/city",
@@ -963,7 +1010,6 @@
 
                 }
 
-                console.log(unemploymentdata);
  
 
                 var chart4_last_month = unemploymentdata[unemploymentdata.length - 1];
@@ -1628,7 +1674,6 @@ var chart6;
                     var trendur = ds.Data({"value mode": "SESONAL_ADDATIVE_M_TREND", "month": ds.Dimension("month").id[i] }, false);
 
                     month = m[i].replace("M", "-");
-                    console.log(month);
                     lonirdata.push([Date.parse(month), lonir/1000000]);
                     trendurdata.push([Date.parse(month), trendur/1000000]);
 
@@ -3041,7 +3086,7 @@ var chart8;
                 loadDataAndBuildChart9();
                 loadDataAndBuildChart10();
 
-                loadDataAndBuildChart13();
+                //loadDataAndBuildChart13();
             });
 </script>
 
@@ -3288,7 +3333,7 @@ calendarElementListRoot.appendChild(calendarElementList2);
 var requestCalendarElements = new XMLHttpRequest();
 requestCalendarElements.open(
   "GET",
-  "https://kalendari.hagstova.fo/api/Dissemination",
+  "https://kalendariapi.hagstova.fo/api/Dissemination",
   true
 );
 requestCalendarElements.onload = function () {
