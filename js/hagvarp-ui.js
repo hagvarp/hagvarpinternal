@@ -110,6 +110,11 @@
   }
 
   Reveal.initialize({
+    width: 1240,
+    height: 700,
+    margin: 0.04,
+    minScale: 0.2,
+    maxScale: 1.6,
     history: true,
     viewDistance: 2,
     transition: 'fade',
