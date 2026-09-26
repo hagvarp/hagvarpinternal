@@ -11,7 +11,7 @@
   var axis = 'rgba(255,255,255,.16)';
 
   H.setOptions({
-    colors: ['#70D6FF', '#58D6B5', '#FF7A79', '#FFD166', '#A9B8FF', '#D8E2EA'],
+    colors: ['#67C77A', '#E96864', '#91D59D', '#F0928F', '#DCEFE0', '#FFFFFF'],
 
     chart: {
       backgroundColor: 'transparent',
@@ -99,7 +99,7 @@
     tooltip: {
       backgroundColor: 'rgba(5,20,32,.96)',
       borderColor: 'rgba(255,255,255,.16)',
-      borderRadius: 12,
+      borderRadius: 4,
       shadow: false,
       style: {
         color: '#fff',
@@ -141,9 +141,9 @@
       },
       column: {
         borderWidth: 0,
-        groupPadding: 0.15,
-        pointPadding: 0.05,
-        maxPointWidth: 34
+        groupPadding: 0.18,
+        pointPadding: 0.07,
+        maxPointWidth: 30
       },
       area: {
         lineWidth: 3,

@@ -393,7 +393,7 @@ Highcharts.setOptions({
                 var createdSeries = [{
                     name: "Tilflyting",
                     data: tilflytingdata,
-                    color: "#58D6B5",
+                    color: "#67C77A",
                     borderWidth: 0,
                     tooltip: {
                         valueDecimals: 0
@@ -401,7 +401,7 @@ Highcharts.setOptions({
                 }, {
                     name: "Fráflyting",
                     data: fraflytingdata,
-                    color: "#FF7A79",
+                    color: "#E96864",
                     borderWidth: 0,
                     tooltip: {
                         valueDecimals: 0
@@ -682,7 +682,7 @@ Highcharts.setOptions({
     var createdSeries = [{
         name: "Fødd",
         data: tilflytingdata,
-        color: "#58D6B5",
+        color: "#67C77A",
         borderWidth: 0,
         tooltip: {
             valueDecimals: 0
@@ -690,7 +690,7 @@ Highcharts.setOptions({
     }, {
         name: "Deyð",
         data: fraflytingdata,
-        color: "#FF7A79",
+        color: "#E96864",
         borderWidth: 0,
         tooltip: {
             valueDecimals: 0
@@ -1198,7 +1198,7 @@ var chart4b;
                           name: 'Sýsla',
                           states: {
                               hover: {
-                                  color: '#BADA55'
+                                  color: '#67C77A'
                               }
                           }
                       }]
@@ -1346,7 +1346,7 @@ var chart4b;
                 var createdSeries = [{
                     name: "Starvsfólk",
                     data: starvsfolkdata,
-                    color: "#58D6B5",
+                    color: "#67C77A",
                     borderWidth: 0,
                     tooltip: {
                         valueDecimals: 0
@@ -1610,7 +1610,7 @@ var chart4b;
                 var createdSeries = [{
                     name: "Lønir",
                     data: lonirdata,
-                    color: "#58D6B5",
+                    color: "#67C77A",
                     borderWidth: 0,
                     tooltip: {
                         valueDecimals: 0
@@ -1886,7 +1886,7 @@ var chart4b;
                 var createdSeries = [{
                     name: "Útflutningur",
                     data: utflutningurdata,
-                    color: "#58D6B5",
+                    color: "#67C77A",
                     borderWidth: 0,
                     tooltip: {
                         valueDecimals: 0
@@ -1894,7 +1894,7 @@ var chart4b;
                 }, {
                     name: "Innflutningur",
                     data: innflutningurdata,
-                    color: "#70D6FF",
+                    color: "#E96864",
                     borderWidth: 0,
 
                     tooltip: {
@@ -2186,7 +2186,7 @@ var chart4b;
                 {
                     name: "Toskur, hýsa, upsi",
                     data: toskurhysaupsidata,
-                    color: "#FF7A79",
+                    color: "#E96864",
                     tooltip: {
                         valueDecimals: 1
                     },
@@ -2196,7 +2196,7 @@ var chart4b;
                 {
                     name: "Makrelur, sild, svartkjaftur",
                     data: makrelursildsvartkjafturdata,
-                    color: "#FFD166",
+                    color: "#91D59D",
                     tooltip: {
                         valueDecimals: 1
                     },
@@ -2206,7 +2206,7 @@ var chart4b;
                 {
                     name: "Alifiskur",
                     data: alifiskurdata,
-                    color: "#FF9A62",
+                    color: "#F0928F",
                     tooltip: {
                         valueDecimals: 1
                     },
@@ -2216,7 +2216,7 @@ var chart4b;
                 {
                     name: "Onnur fiskasløg",
                     data: onnurfiskaslogdata,
-                    color: "#ecf0f1",
+                    color: "#DCEFE0",
                     tooltip: {
                         valueDecimals: 1
                     },

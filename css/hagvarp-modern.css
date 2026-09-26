@@ -5,6 +5,10 @@
   --hag-blue-deep: #003557;
   --hag-blue-dark: #022d49;
   --hag-cyan: #69cbe8;
+  --hag-green: #67c77a;
+  --hag-green-soft: #91d59d;
+  --hag-red: #e96864;
+  --hag-red-soft: #f0928f;
   --hag-white: #ffffff;
   --hag-muted: rgba(255,255,255,.70);
   --hag-faint: rgba(255,255,255,.11);
@@ -108,11 +112,11 @@ body { font-family: 'Open Sans', Arial, sans-serif; }
   position: absolute;
   left: 0;
   bottom: 72px;
-  width: 1000px;
+  width: 1040px;
   box-sizing: border-box;
-  padding: 28px 64px 30px 64px;
+  padding: 30px 68px 32px 68px;
   background: linear-gradient(90deg, rgba(0,76,128,.96) 0%, rgba(0,76,128,.91) 72%, rgba(0,76,128,.72) 100%);
-  border-right: 5px solid rgba(105,203,232,.88);
+  border-right: 4px solid rgba(255,255,255,.72);
   box-shadow: 0 18px 50px rgba(0,0,0,.20);
 }
 .chapter-kicker {
@@ -130,7 +134,7 @@ body { font-family: 'Open Sans', Arial, sans-serif; }
   content: "";
   width: 30px;
   height: 2px;
-  background: var(--hag-cyan);
+  background: var(--hag-green);
 }
 .reveal .chapter-title {
   margin: 0;
@@ -152,28 +156,30 @@ body { font-family: 'Open Sans', Arial, sans-serif; }
 /* Data slides: a broadcast field anchored to one side, not a floating card. */
 .data-slide .data-panel {
   position: absolute;
-  top: 0;
+  top: 20px;
   bottom: auto;
-  height: 700px !important;
-  min-height: 700px !important;
-  width: 1060px;
+  left: 40px;
+  right: auto;
+  height: 660px !important;
+  min-height: 660px !important;
+  width: 1160px;
   box-sizing: border-box;
-  padding: 82px 58px 46px;
+  padding: 70px 64px 42px;
   overflow: hidden;
   background:
-    linear-gradient(155deg, rgba(0,76,128,.94), rgba(0,48,80,.89) 58%, rgba(0,39,65,.82));
+    linear-gradient(135deg, rgba(0,76,128,.95) 0%, rgba(0,61,102,.92) 48%, rgba(0,43,72,.88) 100%);
   border: 0;
-  box-shadow: 18px 0 55px rgba(0,0,0,.20);
+  box-shadow: 0 22px 68px rgba(0,0,0,.22);
 }
-.data-slide .data-panel.left { left: 0; }
-.data-slide .data-panel.right { right: 0; box-shadow: -18px 0 55px rgba(0,0,0,.20); }
+.data-slide .data-panel.left,
+.data-slide .data-panel.right { left: 40px; right: auto; }
 .data-slide .data-panel::after {
   content: "";
   position: absolute;
   top: 0;
   bottom: 0;
   width: 4px;
-  background: linear-gradient(180deg, transparent 3%, var(--hag-cyan) 24%, rgba(105,203,232,.25) 80%, transparent 97%);
+  background: linear-gradient(180deg, transparent 4%, rgba(255,255,255,.72) 22%, rgba(103,199,122,.60) 62%, transparent 96%);
 }
 .data-slide .data-panel.left::after { right: 0; }
 .data-slide .data-panel.right::after { left: 0; }
@@ -208,12 +214,12 @@ body { font-family: 'Open Sans', Arial, sans-serif; }
 }
 .chart-shell {
   position: absolute;
-  left: 56px;
-  right: 50px;
-  top: 148px;
+  left: 62px;
+  right: 58px;
+  top: 145px;
   bottom: auto;
-  height: 513px !important;
-  min-height: 513px !important;
+  height: 475px !important;
+  min-height: 475px !important;
   overflow: visible;
 }
 .chart-shell > div { width: 100%; height: 100%; }
@@ -222,7 +228,7 @@ body { font-family: 'Open Sans', Arial, sans-serif; }
   position: absolute;
   inset: 8px 0 8px;
   pointer-events: none;
-  background: radial-gradient(circle at 82% 12%, rgba(105,203,232,.07), transparent 32%);
+  background: radial-gradient(circle at 82% 12%, rgba(103,199,122,.055), transparent 34%);
 }
 
 /* Highcharts: low-noise context, high emphasis on the newest observation. */
@@ -270,43 +276,78 @@ body { font-family: 'Open Sans', Arial, sans-serif; }
 }
 
 /* Calendar / publication slide */
-.calendar-panel { width: min(880px, 72vw) !important; }
+.publication-chapter .chapter-content {
+  width: 930px;
+  bottom: 86px;
+  padding: 34px 70px 36px;
+}
+.reveal .publication-chapter .chapter-title {
+  font-size: 74px;
+  letter-spacing: -.04em;
+}
+.publication-chapter .chapter-caption {
+  margin-top: 12px;
+  font-size: 16px;
+}
+
+.calendar-slide .calendar-panel,
+.calendar-panel {
+  left: 40px !important;
+  width: 1160px !important;
+  height: 660px !important;
+  padding: 62px 70px 46px !important;
+  background:
+    linear-gradient(135deg, rgba(0,76,128,.96), rgba(0,51,86,.92) 58%, rgba(0,39,65,.88));
+}
+.calendar-slide .calendar-panel::after {
+  left: auto;
+  right: 0;
+}
+.calendar-slide .data-heading {
+  margin-bottom: 0;
+}
 #outputDisseminationFrontPage {
   position: absolute;
-  left: 48px;
-  right: 40px;
-  top: 190px;
+  left: 70px;
+  right: 70px;
+  top: 182px;
   bottom: 48px;
   margin: 0 !important;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0 28px;
+  gap: 0 54px;
   align-content: start;
   font-weight: 400 !important;
   text-transform: none !important;
 }
 #calendarElementList, #calendarElementList2 { float: none; min-width: 0; }
-.listElement { margin-bottom: 12px !important; }
+.listElement {
+  position: relative;
+  min-height: 62px;
+  margin-bottom: 13px !important;
+  padding: 4px 0 4px 0;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
 .calendarElementDesign {
   display: inline-flex;
   flex-direction: column;
   justify-content: center;
-  width: 50px !important;
-  height: 50px !important;
-  margin-right: 10px;
+  width: 56px !important;
+  height: 56px !important;
+  margin-right: 14px;
   vertical-align: middle !important;
   text-align: center !important;
-  background: rgba(255,255,255,.12);
-  border-left: 3px solid var(--hag-cyan);
+  background: rgba(255,255,255,.10);
+  border-left: 3px solid var(--hag-green);
   color: #fff;
 }
-.calendarElementDesignDay { margin: 0 !important; font-size: 19px !important; font-weight: 760; line-height: 1; }
-.calendarElementDesignMonth { margin: 3px 0 0 !important; font-size: 10px !important; font-weight: 700; text-transform: uppercase; color: rgba(255,255,255,.60); }
-.calendarElementName { display: inline-block; width: calc(100% - 68px); min-height: 50px; vertical-align: middle; color: #fff; }
-.calendarElementName1 { padding-top: 6px !important; font-size: 13px !important; font-weight: 650; line-height: 1.15 !important; text-align: left !important; }
+.calendarElementDesignDay { margin: 0 !important; font-size: 21px !important; font-weight: 780; line-height: 1; }
+.calendarElementDesignMonth { margin: 4px 0 0 !important; font-size: 9px !important; font-weight: 750; text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,.62); }
+.calendarElementName { display: inline-block; width: calc(100% - 76px); min-height: 56px; vertical-align: middle; color: #fff; }
+.calendarElementName1 { padding-top: 7px !important; font-size: 14px !important; font-weight: 680; line-height: 1.18 !important; text-align: left !important; }
 .calendarElementName2 { margin-top: 4px; font-size: 10px !important; color: rgba(255,255,255,.55); line-height: 1.15 !important; text-align: left !important; }
-.postPoned, .postPonedFrontpage { color: #ffd2d8; font-size: 10px !important; font-weight: 700 !important; }
-.rescheduled { color: #d5f0ad; }
+.postPoned, .postPonedFrontpage { color: var(--hag-red-soft); font-size: 10px !important; font-weight: 750 !important; }
+.rescheduled { color: var(--hag-green-soft); }
 
 /* Reveal chrome */
 .reveal .controls { color: rgba(255,255,255,.46); transform: scale(.72); right: 18px; bottom: 14px; }
@@ -318,7 +359,7 @@ body { font-family: 'Open Sans', Arial, sans-serif; }
   .hag-slide-meta { right: 20px; top: 27px; }
   .hag-progress { left: 20px; right: 20px; bottom: 18px; }
   .chapter-slide .chapter-content { width: calc(100% - 22px); padding: 24px 30px; bottom: 54px; }
-  .data-slide .data-panel, .data-slide .data-panel.left, .data-slide .data-panel.right { left: 0; right: auto; width: 78vw; }
+  .data-slide .data-panel, .data-slide .data-panel.left, .data-slide .data-panel.right { left: 0; right: auto; width: 92vw; }
 }
 
 /* Chart loading/error state. Keeps failures visible instead of leaving an empty panel. */
