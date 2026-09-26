@@ -14,7 +14,19 @@ html, body { background: #061827; }
 body { font-family: 'Open Sans', Arial, sans-serif; }
 .reveal { font-family: 'Open Sans', Arial, sans-serif; color: #fff; }
 .reveal .slides { text-align: left; }
-.reveal .slides > section { box-sizing: border-box; padding: 0; }
+/* Reveal.js 3.x does not assign a full height to horizontal sections.
+   Hagvarp uses absolutely positioned broadcast layouts, so each top-level
+   slide must explicitly occupy the whole Reveal stage. */
+.reveal .slides > section {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+.reveal .slides > section.present {
+  height: 100%;
+}
+
 
 /* The photographic image remains the main visual. Hagvarp should feel like
    a broadcast from Hagstova, not a deck of cards sitting on top of a photo. */
@@ -130,7 +142,8 @@ body { font-family: 'Open Sans', Arial, sans-serif; }
 .data-slide .data-panel {
   position: absolute;
   top: 0;
-  bottom: 0;
+  bottom: auto;
+  height: 100%;
   width: min(760px, 63vw);
   box-sizing: border-box;
   padding: 84px 48px 48px;
