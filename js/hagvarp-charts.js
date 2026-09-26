@@ -2915,8 +2915,19 @@ var chart4b;
                     type: "POST",
                     url: url,
                     data: JSON.stringify(query),
+                    timeout: 20000,
                     success: function(data) {
                         main(data);
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        console.error("Hagvarp Statbank request failed", {
+                            url: url,
+                            status: xhr && xhr.status,
+                            statusText: xhr && xhr.statusText,
+                            textStatus: textStatus,
+                            error: errorThrown,
+                            response: xhr && xhr.responseText
+                        });
                     }
                 });
             }
