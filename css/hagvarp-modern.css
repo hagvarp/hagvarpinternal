@@ -17,14 +17,25 @@ body { font-family: 'Open Sans', Arial, sans-serif; }
 /* Reveal.js 3.x does not assign a full height to horizontal sections.
    Hagvarp uses absolutely positioned broadcast layouts, so each top-level
    slide must explicitly occupy the whole Reveal stage. */
+/* Hagvarp runs in Reveal's fixed 960 x 700 coordinate system.
+   Reveal 3.x vertically centres sections by writing an inline `top` value.
+   That breaks absolute-positioned broadcast layouts, so top-level slides are
+   explicitly pinned to the stage and given the full 700px design height. */
 .reveal .slides > section {
   box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-  padding: 0;
+  width: 960px !important;
+  height: 700px !important;
+  min-height: 700px !important;
+  top: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
-.reveal .slides > section.present {
-  height: 100%;
+.reveal .slides > section.present,
+.reveal .slides > section.past,
+.reveal .slides > section.future {
+  height: 700px !important;
+  min-height: 700px !important;
+  top: 0 !important;
 }
 
 
@@ -143,7 +154,8 @@ body { font-family: 'Open Sans', Arial, sans-serif; }
   position: absolute;
   top: 0;
   bottom: auto;
-  height: 100%;
+  height: 700px !important;
+  min-height: 700px !important;
   width: min(760px, 63vw);
   box-sizing: border-box;
   padding: 84px 48px 48px;
@@ -199,7 +211,10 @@ body { font-family: 'Open Sans', Arial, sans-serif; }
   left: 42px;
   right: 36px;
   top: 145px;
-  bottom: 42px;
+  bottom: auto;
+  height: 513px !important;
+  min-height: 513px !important;
+  overflow: visible;
 }
 .chart-shell > div { width: 100%; height: 100%; }
 .chart-shell::before {
