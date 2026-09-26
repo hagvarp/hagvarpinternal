@@ -1,0 +1,294 @@
+@import url(../lib/font/hagstova.fo.nts/open-sans/font.css);
+
+:root {
+  --hag-blue: #004c80;
+  --hag-blue-deep: #003557;
+  --hag-blue-dark: #022d49;
+  --hag-cyan: #69cbe8;
+  --hag-white: #ffffff;
+  --hag-muted: rgba(255,255,255,.70);
+  --hag-faint: rgba(255,255,255,.11);
+}
+
+html, body { background: #061827; }
+body { font-family: 'Open Sans', Arial, sans-serif; }
+.reveal { font-family: 'Open Sans', Arial, sans-serif; color: #fff; }
+.reveal .slides { text-align: left; }
+.reveal .slides > section { box-sizing: border-box; padding: 0; }
+
+/* The photographic image remains the main visual. Hagvarp should feel like
+   a broadcast from Hagstova, not a deck of cards sitting on top of a photo. */
+.reveal .slide-background::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(0,20,34,.72) 0%, rgba(0,25,43,.40) 40%, rgba(0,25,43,.08) 72%, rgba(0,20,34,.22) 100%),
+    linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.30));
+}
+.data-slide + .slide-background::after { background: rgba(0,24,40,.36); }
+
+/* Persistent Hagstova signature */
+.hag-brand {
+  position: fixed;
+  z-index: 50;
+  top: 28px;
+  left: 34px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  pointer-events: none;
+}
+.hag-brand img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,.22));
+}
+.hag-brand__text { display: flex; flex-direction: column; line-height: 1.06; }
+.hag-brand__text strong { font-size: 13px; font-weight: 750; letter-spacing: .015em; }
+.hag-brand__text span { margin-top: 3px; font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.58); }
+
+.hag-slide-meta {
+  position: fixed;
+  z-index: 50;
+  right: 34px;
+  top: 34px;
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: .14em;
+  color: rgba(255,255,255,.48);
+  pointer-events: none;
+}
+.hag-progress {
+  position: fixed;
+  z-index: 50;
+  left: 34px;
+  right: 34px;
+  bottom: 24px;
+  height: 2px;
+  background: rgba(255,255,255,.13);
+  pointer-events: none;
+}
+.hag-progress__bar {
+  height: 100%;
+  width: 0;
+  background: #fff;
+  transition: width .55s ease;
+}
+
+/* Chapter slides: large editorial type + the familiar Hagstova blue bar.
+   The bar is intentionally flat, not a rounded corporate card. */
+.chapter-slide .chapter-content {
+  position: absolute;
+  left: 0;
+  bottom: 72px;
+  width: min(1120px, 84vw);
+  box-sizing: border-box;
+  padding: 28px 64px 30px 64px;
+  background: linear-gradient(90deg, rgba(0,76,128,.96) 0%, rgba(0,76,128,.91) 72%, rgba(0,76,128,.72) 100%);
+  border-right: 5px solid rgba(105,203,232,.88);
+  box-shadow: 0 18px 50px rgba(0,0,0,.20);
+}
+.chapter-kicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 9px;
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.67);
+}
+.chapter-kicker::before {
+  content: "";
+  width: 30px;
+  height: 2px;
+  background: var(--hag-cyan);
+}
+.reveal .chapter-title {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(52px, 6.6vw, 96px);
+  line-height: .98;
+  letter-spacing: -.045em;
+  font-weight: 800;
+  text-transform: none;
+  text-shadow: none;
+}
+.chapter-caption {
+  margin-top: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(255,255,255,.70);
+}
+
+/* Data slides: a broadcast field anchored to one side, not a floating card. */
+.data-slide .data-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: min(760px, 63vw);
+  box-sizing: border-box;
+  padding: 84px 48px 48px;
+  overflow: hidden;
+  background:
+    linear-gradient(155deg, rgba(0,76,128,.94), rgba(0,48,80,.89) 58%, rgba(0,39,65,.82));
+  border: 0;
+  box-shadow: 18px 0 55px rgba(0,0,0,.20);
+}
+.data-slide .data-panel.left { left: 0; }
+.data-slide .data-panel.right { right: 0; box-shadow: -18px 0 55px rgba(0,0,0,.20); }
+.data-slide .data-panel::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, transparent 3%, var(--hag-cyan) 24%, rgba(105,203,232,.25) 80%, transparent 97%);
+}
+.data-slide .data-panel.left::after { right: 0; }
+.data-slide .data-panel.right::after { left: 0; }
+
+.data-heading { position: relative; z-index: 2; margin: 0 0 12px; }
+.data-kicker {
+  display: block;
+  margin-bottom: 7px;
+  color: rgba(255,255,255,.52);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+.reveal .data-title {
+  margin: 0;
+  color: #fff;
+  font-size: 37px;
+  line-height: 1.03;
+  letter-spacing: -.035em;
+  font-weight: 780;
+  text-transform: none;
+}
+.reveal .data-subtitle {
+  position: static;
+  margin: 8px 0 0;
+  color: rgba(255,255,255,.64);
+  font-size: 13px;
+  line-height: 1.35;
+  font-weight: 600;
+  text-transform: none;
+}
+.chart-shell {
+  position: absolute;
+  left: 42px;
+  right: 36px;
+  top: 145px;
+  bottom: 42px;
+}
+.chart-shell > div { width: 100%; height: 100%; }
+.chart-shell::before {
+  content: "";
+  position: absolute;
+  inset: 8px 0 8px;
+  pointer-events: none;
+  background: radial-gradient(circle at 82% 12%, rgba(105,203,232,.07), transparent 32%);
+}
+
+/* Highcharts: low-noise context, high emphasis on the newest observation. */
+.highcharts-container { overflow: visible !important; font-family: 'Open Sans', Arial, sans-serif !important; }
+.highcharts-root { font-family: 'Open Sans', Arial, sans-serif !important; }
+.highcharts-grid-line { stroke: rgba(255,255,255,.09) !important; stroke-dasharray: 3 5; }
+.highcharts-axis-line, .highcharts-tick { stroke: rgba(255,255,255,.14) !important; }
+.highcharts-axis-labels text { fill: rgba(255,255,255,.50) !important; font-weight: 600 !important; }
+.highcharts-legend-item text { fill: rgba(255,255,255,.76) !important; font-weight: 650 !important; }
+.highcharts-series path.highcharts-graph { filter: drop-shadow(0 4px 8px rgba(0,0,0,.14)); }
+.highcharts-tooltip-box { fill: rgba(4,24,39,.96); stroke: rgba(255,255,255,.14); }
+
+.MyDataLabelTooltip {
+  position: relative !important;
+  z-index: 50 !important;
+  min-width: 72px;
+  padding: 8px 10px 9px !important;
+  border: 1px solid rgba(255,255,255,.18) !important;
+  border-radius: 2px !important;
+  background: rgba(3,28,46,.94) !important;
+  box-shadow: 0 9px 24px rgba(0,0,0,.24);
+  color: #fff;
+  font-size: 15px !important;
+  font-weight: 780 !important;
+  line-height: 1.05;
+  text-align: left !important;
+  white-space: nowrap;
+}
+.MyDataLabelTooltip::before {
+  content: "";
+  display: block;
+  width: 24px;
+  height: 3px;
+  margin-bottom: 6px;
+  background: var(--hag-cyan);
+}
+.datetext {
+  display: inline-block;
+  margin-bottom: 3px;
+  color: rgba(255,255,255,.54) !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  letter-spacing: .04em;
+  text-transform: none;
+}
+
+/* Calendar / publication slide */
+.calendar-panel { width: min(880px, 72vw) !important; }
+#outputDisseminationFrontPage {
+  position: absolute;
+  left: 48px;
+  right: 40px;
+  top: 190px;
+  bottom: 48px;
+  margin: 0 !important;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 28px;
+  align-content: start;
+  font-weight: 400 !important;
+  text-transform: none !important;
+}
+#calendarElementList, #calendarElementList2 { float: none; min-width: 0; }
+.listElement { margin-bottom: 12px !important; }
+.calendarElementDesign {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 50px !important;
+  height: 50px !important;
+  margin-right: 10px;
+  vertical-align: middle !important;
+  text-align: center !important;
+  background: rgba(255,255,255,.12);
+  border-left: 3px solid var(--hag-cyan);
+  color: #fff;
+}
+.calendarElementDesignDay { margin: 0 !important; font-size: 19px !important; font-weight: 760; line-height: 1; }
+.calendarElementDesignMonth { margin: 3px 0 0 !important; font-size: 10px !important; font-weight: 700; text-transform: uppercase; color: rgba(255,255,255,.60); }
+.calendarElementName { display: inline-block; width: calc(100% - 68px); min-height: 50px; vertical-align: middle; color: #fff; }
+.calendarElementName1 { padding-top: 6px !important; font-size: 13px !important; font-weight: 650; line-height: 1.15 !important; text-align: left !important; }
+.calendarElementName2 { margin-top: 4px; font-size: 10px !important; color: rgba(255,255,255,.55); line-height: 1.15 !important; text-align: left !important; }
+.postPoned, .postPonedFrontpage { color: #ffd2d8; font-size: 10px !important; font-weight: 700 !important; }
+.rescheduled { color: #d5f0ad; }
+
+/* Reveal chrome */
+.reveal .controls { color: rgba(255,255,255,.46); transform: scale(.72); right: 18px; bottom: 14px; }
+.reveal .progress { display: none; }
+.reveal section img { border: 0; box-shadow: none; background: none; }
+
+@media (max-width: 900px) {
+  .hag-brand { left: 20px; top: 20px; }
+  .hag-slide-meta { right: 20px; top: 27px; }
+  .hag-progress { left: 20px; right: 20px; bottom: 18px; }
+  .chapter-slide .chapter-content { width: calc(100% - 22px); padding: 24px 30px; bottom: 54px; }
+  .data-slide .data-panel, .data-slide .data-panel.left, .data-slide .data-panel.right { left: 0; right: auto; width: 78vw; }
+}
