@@ -378,3 +378,37 @@ body { font-family: 'Open Sans', Arial, sans-serif; }
   text-align: center;
   pointer-events: none;
 }
+
+/* 2026-09-27 final spacing pass */
+.publication-chapter .chapter-kicker {
+  margin-bottom: 16px;
+}
+.reveal .publication-chapter .chapter-title {
+  line-height: 1.05;
+}
+.publication-chapter .chapter-caption {
+  margin-top: 18px;
+}
+
+.calendar-slide .data-heading {
+  margin-bottom: 0;
+}
+.calendar-slide .data-kicker {
+  margin-bottom: 12px;
+}
+.reveal .calendar-slide .data-title {
+  line-height: 1.08;
+}
+.reveal .calendar-slide .data-subtitle {
+  margin-top: 12px;
+}
+
+/* Keep the two deadline columns as one centered block. */
+#outputDisseminationFrontPage {
+  left: 50%;
+  right: auto;
+  width: 930px;
+  transform: translateX(-50%);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 72px;
+}
