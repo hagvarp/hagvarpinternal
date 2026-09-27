@@ -412,3 +412,40 @@ body { font-family: 'Open Sans', Arial, sans-serif; }
   grid-template-columns: repeat(2, minmax(0, 1fr));
   column-gap: 72px;
 }
+
+
+/* 2026-09-27 long-title typography pass */
+.reveal .chapter-title {
+  line-height: 1.02;
+}
+.chapter-caption {
+  margin-top: 16px;
+}
+.reveal .chapter-title--long {
+  font-size: 72px;
+  line-height: 1.01;
+  letter-spacing: -.035em;
+  max-width: 920px;
+}
+.chapter-title--long + .chapter-caption {
+  margin-top: 20px;
+}
+
+.data-kicker {
+  margin-bottom: 11px;
+}
+.reveal .data-title {
+  line-height: 1.07;
+}
+.reveal .data-subtitle {
+  margin-top: 11px;
+}
+.reveal .data-title--long {
+  font-size: 32px;
+  line-height: 1.08;
+  letter-spacing: -.025em;
+  max-width: 900px;
+}
+.data-title--long + .data-subtitle {
+  margin-top: 13px;
+}
