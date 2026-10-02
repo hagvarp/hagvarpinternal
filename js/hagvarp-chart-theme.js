@@ -163,8 +163,10 @@
   H.addEvent(H.Chart, 'load', function () {
     var chart = this;
 
-    chart.series.forEach(function (series) {
-      if (!series || !series.points || !series.points.length) return;
+    var i;
+    for (i = 0; i < chart.series.length; i++) {
+      var series = chart.series[i];
+      if (!series || !series.points || !series.points.length) continue;
 
       var last = series.points[series.points.length - 1];
       var isLine = series.type === 'line' || series.type === 'spline' || series.type === 'area' || series.type === 'areaspline';
@@ -180,7 +182,7 @@
           }
         }, false);
       }
-    });
+    }
 
     chart.redraw(false);
   });

@@ -449,3 +449,92 @@ body { font-family: 'Open Sans', Arial, sans-serif; }
 .data-title--long + .data-subtitle {
   margin-top: 13px;
 }
+
+/* ============================================================
+   Samsung/Tizen legacy compatibility pass (2019/2020 target)
+   Avoids CSS features that older TV Chromium builds may ignore.
+   ============================================================ */
+.reveal .slide-background::after {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.hag-brand { gap: 0; }
+.hag-brand img { margin-right: 10px; }
+.chapter-kicker { gap: 0; }
+.chapter-kicker::before { margin-right: 10px; }
+
+.reveal .chapter-title {
+  font-size: 82px;
+}
+
+.chart-shell::before,
+.hag-chart-status {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.chart-shell::before {
+  top: 8px;
+  bottom: 8px;
+}
+
+/* Use flex columns instead of CSS Grid for the publication calendar. */
+#outputDisseminationFrontPage {
+  display: block;
+  left: 50%;
+  right: auto;
+  width: 930px;
+  margin-left: -465px !important;
+  transform: none;
+  overflow: hidden;
+}
+#calendarElementList,
+#calendarElementList2 {
+  float: left;
+  width: 429px;
+  min-width: 0;
+  box-sizing: border-box;
+}
+#calendarElementList2 { margin-left: 72px; }
+
+.calendarElementName { width: 350px; }
+
+/* Explicit fallbacks for custom-property colors. */
+.chapter-kicker::before { background: #67c77a; }
+.hag-progress__bar { background: #ffffff; }
+.MyDataLabelTooltip::before { background: #67c77a; }
+.calendarElementDesign { border-left-color: #67c77a; }
+.postPoned, .postPonedFrontpage { color: #f0928f; }
+.rescheduled { color: #91d59d; }
+
+/* Old TV engines can struggle with filtered SVG and large CSS shadows. */
+.samsung-tv .hag-brand img,
+.samsung-tv .highcharts-series path.highcharts-graph {
+  filter: none !important;
+}
+.samsung-tv .data-slide .data-panel,
+.samsung-tv .chapter-slide .chapter-content {
+  box-shadow: none;
+}
+.samsung-tv .hag-progress__bar {
+  transition: none;
+}
+.samsung-tv .reveal .controls { display: none !important; }
+
+#hag-tv-diagnostic {
+  display: none;
+  position: fixed;
+  z-index: 99999;
+  left: 30px;
+  right: 30px;
+  bottom: 30px;
+  padding: 18px 22px;
+  background: #7b1f1f;
+  color: #ffffff;
+  font: 16px/1.4 Arial, sans-serif;
+  border: 2px solid #ffffff;
+}

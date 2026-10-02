@@ -8,9 +8,10 @@
   <title>Vit taka samfelagspulsin | Hagstova Føroya</title>
 
   <link rel="stylesheet" href="css/reveal.css">
-  <link rel="stylesheet" href="css/hagvarp-modern.css?v=20260927-final4">
+  <link rel="stylesheet" href="css/hagvarp-modern.css?v=20261001-tv2">
   <link rel="stylesheet" href="lib/css/zenburn.css">
 
+  <script src="js/hagvarp-polyfills.js?v=20261001-tv2"></script>
   <script src="lib/js/JSON-stat/json-stat.js"></script>
   <script src="lib/js/jquery-dist/dist/jquery.min.js"></script>
   <script src="lib/js/highstock-release/highstock.js"></script>
@@ -27,19 +28,7 @@
     document.head.appendChild(printLink);
   </script>
 
-  <!-- Existing internal Hagstova analytics -->
-  <script>
-    var _paq = window._paq = window._paq || [];
-    _paq.push(['trackPageView']);
-    _paq.push(['enableLinkTracking']);
-    (function() {
-      var u='https://analytics.hagstova.fo/';
-      _paq.push(['setTrackerUrl', u+'piwik.php']);
-      _paq.push(['setSiteId', '1']);
-      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-      g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-    })();
-  </script>
+  <!-- Analytics intentionally disabled in the legacy Samsung TV build. -->
 </head>
 <body>
   <div class="hag-brand" aria-label="Hagstova Føroya">
@@ -133,12 +122,12 @@
     </div>
   </div>
 
-  <script src="js/hagvarp-charts.js?v=20260927-final4"></script>
-  <script src="js/hagvarp-chart-theme.js?v=20260927-final4"></script>
+  <script src="js/hagvarp-charts.js?v=20261001-tv2"></script>
+  <script src="js/hagvarp-chart-theme.js?v=20261001-tv2"></script>
   <script src="lib/js/head.min.js"></script>
   <script src="js/reveal.js"></script>
   <script src="js/moment-with-locales.min.js"></script>
-  <script src="js/hagvarp-calendar.js?v=20260927-final4"></script>
-  <script src="js/hagvarp-ui.js?v=20260927-final4"></script>
+  <script src="js/hagvarp-calendar.js?v=20261001-tv2"></script>
+  <script src="js/hagvarp-ui.js?v=20261001-tv2"></script>
 </body>
 </html>
