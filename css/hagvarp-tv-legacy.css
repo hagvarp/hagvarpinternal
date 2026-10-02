@@ -1,0 +1,137 @@
+/* Hagvarp TV Legacy: Reveal-free runtime for old Samsung/Tizen WebKit. */
+html.hag-tv-legacy,
+html.hag-tv-legacy body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: #061827;
+}
+
+.hag-tv-legacy .reveal {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  color: #fff;
+}
+
+.hag-tv-legacy .reveal .slides {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1240px;
+  height: 700px;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  overflow: hidden;
+}
+
+.hag-tv-legacy .reveal .slides > section {
+  display: block !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+  width: 1240px !important;
+  height: 700px !important;
+  min-height: 700px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  visibility: hidden;
+  opacity: 0;
+  overflow: hidden;
+  background-color: #061827;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-transition: opacity 350ms ease;
+  transition: opacity 350ms ease;
+  -webkit-transform: none !important;
+  transform: none !important;
+}
+
+.hag-tv-legacy .reveal .slides > section.tv-present {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* A simple background darkening layer, replacing Reveal's slide-background DOM. */
+.hag-tv-legacy .reveal .slides > section:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 22, 38, .24);
+  pointer-events: none;
+}
+.hag-tv-legacy .reveal .slides > section.chapter-slide:before {
+  background: rgba(0, 20, 34, .18);
+}
+.hag-tv-legacy .reveal .slides > section.data-slide:before {
+  background: rgba(0, 24, 40, .34);
+}
+
+/* Remove Reveal-only layout states. */
+.hag-tv-legacy .reveal section.past,
+.hag-tv-legacy .reveal section.present,
+.hag-tv-legacy .reveal section.future {
+  display: block !important;
+  top: 0 !important;
+  -webkit-transform: none !important;
+  transform: none !important;
+}
+
+/* Old WebKit fallbacks for the remaining modern CSS properties. */
+.hag-tv-legacy .chapter-title { font-size: 82px !important; }
+.hag-tv-legacy .chapter-title--long { font-size: 72px !important; }
+.hag-tv-legacy .chapter-kicker:before { background: #67c77a !important; }
+.hag-tv-legacy .MyDataLabelTooltip:before { background: #69cbe8 !important; }
+.hag-tv-legacy .calendarElementDesign { border-left-color: #67c77a !important; }
+.hag-tv-legacy .postPoned,
+.hag-tv-legacy .postPonedFrontpage { color: #f0928f !important; }
+.hag-tv-legacy .rescheduled { color: #91d59d !important; }
+
+.hag-tv-legacy .hag-brand img,
+.hag-tv-legacy .highcharts-series path.highcharts-graph { filter: none !important; }
+.hag-tv-legacy .data-slide .data-panel,
+.hag-tv-legacy .chapter-slide .chapter-content { box-shadow: none !important; }
+.hag-tv-legacy .hag-progress__bar { transition: none !important; }
+
+/* Manual test controls. Direction keys on Samsung remote are handled in JS too. */
+.hag-tv-controls {
+  position: fixed;
+  z-index: 200;
+  right: 22px;
+  bottom: 28px;
+  white-space: nowrap;
+}
+.hag-tv-controls button {
+  display: inline-block;
+  width: 42px;
+  height: 38px;
+  margin-left: 5px;
+  padding: 0;
+  border: 1px solid rgba(255,255,255,.35);
+  background: rgba(0,35,58,.72);
+  color: #fff;
+  font: bold 18px/36px Arial, sans-serif;
+  text-align: center;
+  cursor: pointer;
+}
+.hag-tv-controls button:focus {
+  outline: 2px solid #67c77a;
+  background: #004c80;
+}
+
+/* The status layer must have explicit edges for Tizen 2.4. */
+.hag-tv-legacy .hag-chart-status {
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
