@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="fo">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hagvarp - Samsung TV test</title>
+  <style>
+    html, body { margin:0; padding:0; background:#004c80; color:#fff; font-family:Arial,sans-serif; }
+    .wrap { width:90%; max-width:980px; margin:0 auto; padding:28px 0 50px; }
+    h1 { font-size:36px; margin:0 0 8px; }
+    .intro { font-size:18px; line-height:1.45; margin:0 0 25px; color:#e8f2f7; }
+    .row { display:block; position:relative; margin:8px 0; padding:14px 135px 14px 18px; min-height:28px; background:#0c5b8d; border-left:6px solid #8aa7b9; }
+    .name { font-size:20px; font-weight:bold; }
+    .detail { display:block; margin-top:4px; font-size:14px; color:#d8e7ef; word-break:break-all; }
+    .status { position:absolute; right:16px; top:14px; min-width:95px; text-align:center; padding:5px 8px; font-size:14px; font-weight:bold; background:#6f8290; }
+    .ok { border-left-color:#54b948; }
+    .ok .status { background:#347f36; }
+    .fail { border-left-color:#e44444; }
+    .fail .status { background:#b52d2d; }
+    .warn { border-left-color:#efb33d; }
+    .warn .status { background:#9a6b10; }
+    .buttons { margin-top:26px; }
+    .buttons a { display:inline-block; margin:0 10px 10px 0; padding:12px 18px; background:#fff; color:#004c80; text-decoration:none; font-weight:bold; }
+    #summary { margin-top:22px; padding:18px; font-size:18px; line-height:1.45; background:#073c60; }
+    #ua { font-size:13px; line-height:1.4; color:#cfe0e9; margin-top:22px; word-break:break-all; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Hagvarp TV test</h1>
+  <p class="intro">Hendan síðan testar stig fyri stig, hvat gamli Samsung-kagin megnar. Bíða í uml. 15 sekund.</p>
+
+  <div class="row ok" id="t-html"><span class="name">1. HTML</span><span class="detail">Um tú sært hetta, er sjálv síðan komin fram.</span><span class="status">OK</span></div>
+  <div class="row" id="t-js"><span class="name">2. JavaScript ES5</span><span class="detail">Vanligt eldri JavaScript.</span><span class="status">BÍÐAR</span></div>
+  <div class="row" id="t-local"><span class="name">3. Lokal XHR / JSON</span><span class="detail">Lesur utm.regions.geo.json frá sama Hagvarp-setri.</span><span class="status">BÍÐAR</span></div>
+  <div class="row" id="t-jsonstat"><span class="name">4. JSON-stat</span><span class="detail">Sama bibliotek sum Hagvarp brúkar.</span><span class="status">BÍÐAR</span></div>
+  <div class="row" id="t-jquery"><span class="name">5. jQuery</span><span class="detail">Sama lokala jQuery-fíla sum Hagvarp.</span><span class="status">BÍÐAR</span></div>
+  <div class="row" id="t-highcharts"><span class="name">6. Highcharts</span><span class="detail">Sama Highstock-fíla sum grafarnir brúka.</span><span class="status">BÍÐAR</span></div>
+  <div class="row" id="t-reveal"><span class="name">7. Reveal.js</span><span class="detail">Slideshow-motorurin.</span><span class="status">BÍÐAR</span></div>
+  <div class="row" id="t-statbank"><span class="name">8. Statbank HTTPS/API</span><span class="detail">Roynir GET móti sama Statbank-hostinum sum Hagvarp.</span><span class="status">BÍÐAR</span></div>
+
+  <div id="summary">Testurin koyrir...</div>
+  <div class="buttons"><a href="index.html">Opna Hagvarp</a><a href="tv-test.html">Koyr test aftur</a></div>
+  <div id="ua"></div>
+</div>
+
+<script type="text/javascript">
+(function () {
+  var failures = 0;
+  var warnings = 0;
+
+  function byId(id) { return document.getElementById(id); }
+  function setResult(id, state, text, detail) {
+    var row = byId(id);
+    var status = row.getElementsByTagName('span')[2];
+    var details = row.getElementsByTagName('span')[1];
+    row.className = 'row ' + state;
+    status.innerHTML = text;
+    if (detail) { details.innerHTML = detail; }
+    if (state === 'fail') { failures++; }
+    if (state === 'warn') { warnings++; }
+  }
+  function finish() {
+    var box = byId('summary');
+    if (failures === 0 && warnings === 0) {
+      box.innerHTML = '<b>Alt grundleggjandi sær út til at virka.</b><br>Um Hagvarp kortini hongur, er næsta stig at taka Reveal burtur úr TV-útgávuni.';
+    } else if (failures === 0) {
+      box.innerHTML = '<b>Grundskipanin virkar, men eitt ella fleiri stig geva ávaring.</b><br>Tak eina mynd av hesum skíggjanum.';
+    } else {
+      box.innerHTML = '<b>Vit funnu minst eina feilkeldu.</b><br>Tak eina mynd av hesum skíggjanum og send hana. Fyrsta reyða stigið er serliga týdningarmikið.';
+    }
+  }
+  function loadScript(src, id, check, next) {
+    var s = document.createElement('script');
+    var done = false;
+    var timer = setTimeout(function () {
+      if (!done) {
+        done = true;
+        setResult(id, 'fail', 'TIMEOUT', 'Fílan svaraði ikki: ' + src);
+        next();
+      }
+    }, 5000);
+    s.type = 'text/javascript';
+    s.src = src + '?tvtest=20261002';
+    s.onload = s.onreadystatechange = function () {
+      if (done) { return; }
+      if (!s.readyState || s.readyState === 'loaded' || s.readyState === 'complete') {
+        done = true;
+        clearTimeout(timer);
+        try {
+          if (!check || check()) {
+            setResult(id, 'ok', 'OK', src + ' varð lisin inn.');
+          } else {
+            setResult(id, 'fail', 'FEILUR', src + ' varð lisin, men væntaða global variablan manglar.');
+          }
+        } catch (e) {
+          setResult(id, 'fail', 'FEILUR', String(e && e.message ? e.message : e));
+        }
+        s.onload = s.onreadystatechange = null;
+        next();
+      }
+    };
+    s.onerror = function () {
+      if (done) { return; }
+      done = true;
+      clearTimeout(timer);
+      setResult(id, 'fail', 'FEILUR', 'Kundi ikki lesa: ' + src);
+      next();
+    };
+    document.getElementsByTagName('head')[0].appendChild(s);
+  }
+  function xhrGet(url, id, next, external) {
+    var xhr;
+    var done = false;
+    var timer;
+    try { xhr = new XMLHttpRequest(); }
+    catch (e) {
+      setResult(id, 'fail', 'FEILUR', 'XMLHttpRequest finst ikki.');
+      next(); return;
+    }
+    timer = setTimeout(function () {
+      if (!done) {
+        done = true;
+        try { xhr.abort(); } catch (ignore) {}
+        setResult(id, 'fail', 'TIMEOUT', 'Einki svar eftir 8 sekund: ' + url);
+        next();
+      }
+    }, 8000);
+    try {
+      xhr.open('GET', url + (url.indexOf('?') >= 0 ? '&' : '?') + 'tvtest=' + new Date().getTime(), true);
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && !done) {
+          done = true;
+          clearTimeout(timer);
+          if ((xhr.status >= 200 && xhr.status < 300) || (!external && xhr.status === 0 && xhr.responseText)) {
+            setResult(id, 'ok', 'OK', 'HTTP ' + xhr.status + ' - svar móttikið.');
+          } else {
+            setResult(id, 'fail', 'HTTP ' + xhr.status, 'Fekk ikki væntað svar frá ' + url);
+          }
+          next();
+        }
+      };
+      xhr.send(null);
+    } catch (e2) {
+      done = true; clearTimeout(timer);
+      setResult(id, 'fail', 'FEILUR', String(e2 && e2.message ? e2.message : e2));
+      next();
+    }
+  }
+
+  window.onerror = function (msg, url, line) {
+    var box = byId('summary');
+    box.innerHTML = '<b>JavaScript feilur:</b> ' + msg + '<br>' + url + ' : ' + line;
+    return false;
+  };
+
+  byId('ua').innerHTML = '<b>Browser:</b> ' + navigator.userAgent + '<br><b>URL:</b> ' + location.href + '<br><b>Protocol:</b> ' + location.protocol;
+  setResult('t-js', 'ok', 'OK', 'ES5 JavaScript koyrir.');
+
+  xhrGet('utm.regions.geo.json', 't-local', function () {
+    loadScript('lib/js/JSON-stat/json-stat.js', 't-jsonstat', function () { return typeof JSONstat !== 'undefined'; }, function () {
+      loadScript('lib/js/jquery-dist/dist/jquery.min.js', 't-jquery', function () { return typeof jQuery !== 'undefined'; }, function () {
+        loadScript('lib/js/highstock-release/highstock.js', 't-highcharts', function () { return typeof Highcharts !== 'undefined'; }, function () {
+          loadScript('js/reveal.js', 't-reveal', function () { return typeof Reveal !== 'undefined' && typeof Reveal.initialize === 'function'; }, function () {
+            xhrGet('https://statbank.hagstova.fo/api/v1/fo/H2/IB/IB01/fo_vit_md_t.px', 't-statbank', function () {
+              finish();
+            }, true);
+          });
+        });
+      });
+    });
+  }, false);
+})();
+</script>
+</body>
+</html>
